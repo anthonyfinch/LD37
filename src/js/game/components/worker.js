@@ -35,6 +35,11 @@ Worker.prototype.handleWaypoint = function(waypoint) {
     {
         if (waypoint == this.waypoints.toToilet)
         {
+            this.game.physics.arcade.moveToObject(this, this.waypoints.origin, 200);
+        }
+        else if (waypoint == this.waypoints.origin)
+        {
+            this.state = 'working';
             this.body.velocity = 0;
         }
         else if (waypoint.type == 'waypoint')

@@ -31,21 +31,23 @@ game.setUpWorkers = function() {
     lucy = this.workers.create(640, 544);
     ben = this.workers.create(416, 544);
 
-    var thirdFloor, secondFloor, firstFloor, groundFloor, toiletDoor;
+    var thirdFloor, secondFloor, firstFloor, groundFloor, toilet;
 
-    thirdFloor = this.waypoints.create(128, 224);
-    secondFloor = this.waypoints.create(192, 384);
-    firstFloor = this.waypoints.create(128, 544);
-    groundFloor = this.waypoints.create(192, 768);
+    thirdFloor = this.waypoints.create(128, 224, 'waypoint');
+    secondFloor = this.waypoints.create(192, 384, 'waypoint');
+    firstFloor = this.waypoints.create(128, 544, 'waypoint');
+    groundFloor = this.waypoints.create(192, 768, 'waypoint');
 
-    toiletDoor = this.waypoints.create(480, 768);
-    toiletDoor.type = 'toiletdoor';
-    toiletDoor.stopPoint = true;
+    toilet = this.waypoints.create(480, 768, 'toilet');
 
     thirdFloor.waypoints.toToilet = secondFloor;
     secondFloor.waypoints.toToilet = firstFloor;
     firstFloor.waypoints.toToilet = groundFloor;
-    groundFloor.waypoints.toToilet = toiletDoor;
+    groundFloor.waypoints.toToilet = toilet;
+
+    secondFloor.waypoints.toWork = thirdFloor;
+    firstFloor.waypoints.toWork = secondFloor;
+    groundFloor.waypoints.toWork = firstFloor;
 
     jeremy.waypoints.toToilet = thirdFloor;
     carla.waypoints.toToilet = thirdFloor;
@@ -54,6 +56,13 @@ game.setUpWorkers = function() {
     lucy.waypoints.toToilet = firstFloor;
     ben.waypoints.toToilet = firstFloor;
 
+    jeremy.waypoints.toWork = groundFloor;
+    carla.waypoints.toWork = groundFloor;
+    fred.waypoints.toWork = groundFloor;
+    esmerelda.waypoints.toWork = groundFloor;
+    lucy.waypoints.toWork = groundFloor;
+    ben.waypoints.toWork = groundFloor;
+
 };
 
 game.update = function () {
@@ -61,7 +70,7 @@ game.update = function () {
 };
 
 game.closeEnough = function (worker, waypoint) {
-    return this.game.physics.arcade.distanceBetween(worker, waypoint) < 3;
+    return this.game.physics.arcade.distanceBetween(worker, waypoint) < 9;
 };
 
 game.handleWayPoint = function (worker, waypoint) {

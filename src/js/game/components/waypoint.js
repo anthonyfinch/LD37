@@ -1,7 +1,7 @@
-Waypoint = function(game, x, y) {
-    Phaser.Sprite.call(this, game, x, y, 'person');
+Waypoint = function(game, x, y, wptype) {
+    Phaser.Sprite.call(this, game, x, y, 'waypoint');
     this.waypoints = {};
-    this.type = 'travelpoint';
+    this.type = wptype;
 };
 
 Waypoint.prototype = Object.create(Phaser.Sprite.prototype);

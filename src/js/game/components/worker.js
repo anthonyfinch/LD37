@@ -12,20 +12,35 @@ Worker.prototype = Object.create(Phaser.Sprite.prototype);
 Worker.prototype.constructor = Worker;
 
 Worker.prototype.goToBathroom = function() {
-    if (this.state = 'working') {
+    if (this.state == 'working') {
         this.game.physics.arcade.moveToObject(this, this.waypoints.toToilet, 200);
         this.state = 'goingToBathroom';
     };
 };
 
 Worker.prototype.handleWaypoint = function(waypoint) {
-    if (waypoint.stopPoint)
+    if (this.state == 'goingToBathroom')
     {
-        this.body.velocity = 0;
+        if (waypoint.type == 'toilet')
+        {
+            this.state = 'returningToWork';
+            this.game.physics.arcade.moveToObject(this, this.waypoints.toWork, 200);
+        }
+        else if (waypoint.type == 'waypoint')
+        {
+            this.game.physics.arcade.moveToObject(this, waypoint.waypoints.toToilet, 200);
+        };
     }
-    else
+    else if(this.state =='returningToWork')
     {
-        this.game.physics.arcade.moveToObject(this, waypoint.waypoints.toToilet, 200);
+        if (waypoint == this.waypoints.toToilet)
+        {
+            this.body.velocity = 0;
+        }
+        else if (waypoint.type == 'waypoint')
+        {
+            this.game.physics.arcade.moveToObject(this, waypoint.waypoints.toWork);
+        }
     }
 };
 

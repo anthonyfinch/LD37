@@ -1,4 +1,4 @@
-Worker = function(game, x, y, name, peeDelay) {
+var Worker = function(game, x, y, name, peeDelay) {
     Phaser.Sprite.call(this, game, x, y, 'person');
     this.name = name;
     this.game.physics.arcade.enable(this);
@@ -28,11 +28,15 @@ Worker.prototype = Object.create(Phaser.Sprite.prototype);
 Worker.prototype.constructor = Worker;
 
 Worker.prototype.update = function() {
-    this.peeText.setText(this.needToPee + '%');
+    if (this.state === 'peeing' && this.needToPee > 0)
+    {
+        this.needToPee -= 1;
+    }
+   this.peeText.setText(this.needToPee + '%');
 };
 
 Worker.prototype.updatePee = function() {
-    if (this.state == 'working' || this.state == 'goingToBathroom')
+    if (this.state === 'working' || this.state === 'goingToBathroom')
     {
         this.needToPee += 10;
         if (this.needToPee > 100)
@@ -41,47 +45,53 @@ Worker.prototype.updatePee = function() {
             this.needToPee = 0;
         }
     }
-}
+};
 
 Worker.prototype.goToBathroom = function() {
-    if (this.state != 'returningToWork') {
+    if (this.state !== 'returningToWork') {
         this.game.physics.arcade.moveToObject(this, this.waypoints.toToilet, 200);
         this.state = 'goingToBathroom';
-    };
+    }
 };
 
 Worker.prototype.handleWaypoint = function(waypoint) {
-    if (this.state == 'goingToBathroom')
+    if (this.state === 'goingToBathroom')
     {
-        if (waypoint.type == 'toilet')
+        if (waypoint.type === 'toilet')
         {
-            this.needToPee = 0;
-            this.state = 'returningToWork';
-            this.game.physics.arcade.moveToObject(this, this.waypoints.toWork, 200);
+            console.log('hey');
+            console.log(this);
+            if (this.needToPee > 0)
+            {
+                this.state = 'peeing';
+                this.body.velocity.setTo(0, 0);
+            }
+            else
+            {
+                this.state = 'returningToWork';
+                this.game.physics.arcade.moveToObject(this, this.waypoints.toWork, 200);
+            }
         }
-        else if (waypoint.type == 'waypoint')
+        else if (waypoint.type === 'waypoint' || waypoint.type === 'queue')
         {
             this.game.physics.arcade.moveToObject(this, waypoint.waypoints.toToilet, 200);
-        };
+        }
     }
-    else if(this.state == 'returningToWork')
+    else if(this.state === 'returningToWork')
     {
-        if (waypoint == this.waypoints.toToilet)
+        if (waypoint === this.waypoints.toToilet)
         {
             this.game.physics.arcade.moveToObject(this, this.waypoints.origin, 200);
         }
-        else if (waypoint == this.waypoints.origin)
+        else if (waypoint === this.waypoints.origin)
         {
             this.state = 'working';
             this.body.velocity.setTo(0, 0);
         }
-        else if (waypoint.type == 'waypoint')
+        else if (waypoint.type === 'waypoint')
         {
             this.game.physics.arcade.moveToObject(this, waypoint.waypoints.toWork);
         }
-    }
-    else
-    {
     }
 };
 

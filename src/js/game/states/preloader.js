@@ -5,7 +5,7 @@ preloader.preload = function () {
     this.game.load.image('tilesheet', 'images/tilesheet.png');
     this.game.load.image('person', 'images/person.png');
     this.game.load.image('waypoint', 'images/waypoint.png');
-    this.game.load.tilemap('level', "tilemaps/base.json", null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.tilemap('level', 'tilemaps/base.json', null, Phaser.Tilemap.TILED_JSON);
 };
 
 preloader.create = function () {

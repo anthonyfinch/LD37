@@ -34,6 +34,7 @@ game.setUpWorkers = function() {
 
     var thirdFloor, secondFloor, firstFloor, groundFloor, toilet;
     var jeremyOrigin, fredOrigin, carlaOrigin, esmereldaOrigin, lucyOrigin, benOrigin;
+    var q1, q2, q3, q4, q5;
 
     thirdFloor = this.waypoints.create(144, 240, 'waypoint');
     secondFloor = this.waypoints.create(208, 400, 'waypoint');
@@ -49,6 +50,12 @@ game.setUpWorkers = function() {
 
     toilet = this.waypoints.create(496, 784, 'toilet');
 
+    q1 = this.waypoints.create(432, 784, 'queue');
+    q2 = this.waypoints.create(400, 784, 'queue');
+    q3 = this.waypoints.create(368, 784, 'queue');
+    q4 = this.waypoints.create(336, 784, 'queue');
+    q5 = this.waypoints.create(306, 784, 'queue');
+
     var jeremy, fred, carla, esmerelda, lucy, ben;
 
     jeremy = this.workers.create(656, 240, 'Jeremy', 5000);
@@ -63,7 +70,12 @@ game.setUpWorkers = function() {
     thirdFloor.waypoints.toToilet = secondFloor;
     secondFloor.waypoints.toToilet = firstFloor;
     firstFloor.waypoints.toToilet = groundFloor;
-    groundFloor.waypoints.toToilet = toilet;
+    groundFloor.waypoints.toToilet = q5;
+    q5.waypoints.toToilet = q4;
+    q4.waypoints.toToilet = q3;
+    q3.waypoints.toToilet = q2;
+    q2.waypoints.toToilet = q1;
+    q1.waypoints.toToilet = toilet;
 
     secondFloor.waypoints.toWork = thirdFloor;
     firstFloor.waypoints.toWork = secondFloor;

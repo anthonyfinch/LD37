@@ -82,6 +82,10 @@ module.exports = function (grunt) {
         { files: 'src/images/**/*'
         , tasks: ['copy:images']
         }
+      , tilemaps:
+        { files: 'src/tilemaps/**/*'
+          , tasks: ['copy:tilemaps']
+        }
       , audio:
         { files: 'src/audio/**/*'
         , tasks: ['copy:audio']

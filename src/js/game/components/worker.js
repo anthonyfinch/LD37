@@ -55,27 +55,9 @@ Worker.prototype.goToBathroom = function() {
 };
 
 Worker.prototype.handleWaypoint = function(waypoint) {
-    if (this.state === 'goingToBathroom')
+     if (this.state === 'goingToBathroom')
     {
-        if (waypoint.type === 'toilet')
-        {
-            console.log('hey');
-            console.log(this);
-            if (this.needToPee > 0)
-            {
-                this.state = 'peeing';
-                this.body.velocity.setTo(0, 0);
-            }
-            else
-            {
-                this.state = 'returningToWork';
-                this.game.physics.arcade.moveToObject(this, this.waypoints.toWork, 200);
-            }
-        }
-        else if (waypoint.type === 'waypoint' || waypoint.type === 'queue')
-        {
-            this.game.physics.arcade.moveToObject(this, waypoint.waypoints.toToilet, 200);
-        }
+         this.game.physics.arcade.moveToObject(this, waypoint.waypoints.toToilet, 200);
     }
     else if(this.state === 'returningToWork')
     {
@@ -83,15 +65,56 @@ Worker.prototype.handleWaypoint = function(waypoint) {
         {
             this.game.physics.arcade.moveToObject(this, this.waypoints.origin, 200);
         }
-        else if (waypoint === this.waypoints.origin)
-        {
-            this.state = 'working';
-            this.body.velocity.setTo(0, 0);
-        }
-        else if (waypoint.type === 'waypoint')
+        else
         {
             this.game.physics.arcade.moveToObject(this, waypoint.waypoints.toWork);
         }
+    }
+};
+
+Worker.prototype.handleWorkplace = function(waypoint) {
+    if (this.state === 'returningToWork' && waypoint === this.waypoints.origin)
+    {
+        this.state = 'working';
+        this.body.velocity.setTo(0, 0);
+    }
+};
+
+Worker.prototype.handleQueue = function(waypoint) {
+    if (this.state === 'goingToBathroom')
+    {
+        this.game.physics.arcade.moveToObject(this, waypoint.waypoints.toToilet, 200);
+    }
+};
+
+Worker.prototype.handleToilet = function(waypoint) {
+    if (this.needToPee > 0)
+    {
+        this.state = 'peeing';
+        this.body.velocity.setTo(0, 0);
+    }
+    else
+    {
+        this.state = 'returningToWork';
+        this.game.physics.arcade.moveToObject(this, this.waypoints.toWork, 200);
+    }
+};
+
+Worker.prototype.handleMarker = function(waypoint) {
+    switch (waypoint.type)
+    {
+    case 'toilet':
+        this.handleToilet(waypoint);
+        break;
+    case 'waypoint':
+        this.handleWaypoint(waypoint);
+        break;
+    case 'queue':
+        this.handleQueue(waypoint);
+        break;
+    case 'workplace':
+        this.handleWorkplace(waypoint);
+        break;
     }
 };
 

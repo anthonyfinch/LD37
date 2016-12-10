@@ -105,7 +105,7 @@ game.setUpWorkers = function() {
 };
 
 game.update = function () {
-    this.game.physics.arcade.overlap(this.workers, this.waypoints, this.handleWayPoint, this.closeEnough, this);
+    this.game.physics.arcade.overlap(this.workers, this.waypoints, this.handleWaypoint, this.closeEnough, this);
     this.puddleText.setText('Puddles: ' + this.puddles);
 };
 
@@ -113,8 +113,8 @@ game.closeEnough = function (worker, waypoint) {
     return this.game.physics.arcade.distanceBetween(worker, waypoint) < 9;
 };
 
-game.handleWayPoint = function (worker, waypoint) {
-    worker.handleWaypoint(waypoint);
+game.handleWaypoint = function (worker, waypoint) {
+    worker.handleMarker(waypoint);
 };
 
 

@@ -58,12 +58,12 @@ game.setUpWorkers = function() {
 
     var jeremy, fred, carla, esmerelda, lucy, ben;
 
-    jeremy = this.workers.create(656, 240, 'Jeremy', 5000);
-    carla = this.workers.create(432, 240, 'Carla', 10000);
-    fred = this.workers.create(656, 400, 'Fred', 8000);
-    esmerelda = this.workers.create(432, 400, 'Esmerelda', 3000);
-    lucy = this.workers.create(656, 560, 'Lucy', 9000);
-    ben = this.workers.create(432, 560, 'Ben', 11000);
+    jeremy = this.workers.create(656, 240, 'Jeremy', 0.01);
+    carla = this.workers.create(432, 240, 'Carla', 0.05);
+    fred = this.workers.create(656, 400, 'Fred', 0.2);
+    esmerelda = this.workers.create(432, 400, 'Esmerelda', 0.9);
+    lucy = this.workers.create(656, 560, 'Lucy', 0.05);
+    ben = this.workers.create(432, 560, 'Ben', 0.01);
 
     this.workers.setAll('puddleSignal', this.puddleSignal, false, false, 0, true);
 

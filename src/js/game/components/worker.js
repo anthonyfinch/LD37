@@ -1,15 +1,14 @@
-var Worker = function(game, x, y, name, peeDelay) {
+var Worker = function(game, x, y, name, peeInc) {
     Phaser.Sprite.call(this, game, x, y, 'person');
     this.name = name;
     this.game.physics.arcade.enable(this);
     this.inputEnabled = true;
     this.events.onInputDown.add(this.goToBathroom, this);
 
-    this.peeDelay = peeDelay;
+    this.peeInc = peeInc;
 
-    this.game.time.events.loop(this.peeDelay, this.updatePee, this);
+    this.game.time.events.loop(500, this.updatePee, this);
 
-    this.needToPee = 0;
     this.state = 'working';
     this.waypoints = {};
     this.anchor.setTo(0.5, 0.5);
@@ -22,28 +21,35 @@ var Worker = function(game, x, y, name, peeDelay) {
 
     this.addChild(nameText);
     this.addChild(this.peeText);
+
+    this.setPee(0);
 };
 
 Worker.prototype = Object.create(Phaser.Sprite.prototype);
 Worker.prototype.constructor = Worker;
 
-Worker.prototype.update = function() {
-    if (this.state === 'peeing' && this.needToPee > 0)
+Worker.prototype.setPee = function(pee) {
+    if (pee > 100)
     {
-        this.needToPee -= 1;
+        this.puddleSignal.dispatch();
+        pee = 0;
     }
-   this.peeText.setText(this.needToPee + '%');
+    if (pee < 0)
+    {
+        pee = 0;
+    }
+    this.needToPee = pee;
+    this.peeText.setText(Math.round(this.needToPee) + '%');
 };
 
 Worker.prototype.updatePee = function() {
     if (this.state === 'working' || this.state === 'goingToBathroom')
     {
-        this.needToPee += 10;
-        if (this.needToPee > 100)
-        {
-            this.puddleSignal.dispatch();
-            this.needToPee = 0;
-        }
+        this.setPee(this.needToPee + this.peeInc);
+    }
+    else if(this.state === 'peeing' && this.needToPee > 0)
+    {
+        this.setPee(this.needToPee - 5);
     }
 };
 
@@ -83,18 +89,30 @@ Worker.prototype.handleWorkplace = function(waypoint) {
 Worker.prototype.handleQueue = function(waypoint) {
     if (this.state === 'goingToBathroom')
     {
-        this.game.physics.arcade.moveToObject(this, waypoint.waypoints.toToilet, 200);
+        var wp = waypoint.waypoints.toToilet;
+        if (wp.occupied)
+        {
+            this.body.velocity.setTo(0, 0);
+            waypoint.occupied = true;
+        }
+        else
+        {
+            this.game.physics.arcade.moveToObject(this, wp, 200);
+            waypoint.occupied = false;
+        }
     }
 };
 
 Worker.prototype.handleToilet = function(waypoint) {
     if (this.needToPee > 0)
     {
+        waypoint.occupied = true;
         this.state = 'peeing';
         this.body.velocity.setTo(0, 0);
     }
     else
     {
+        waypoint.occupied = false;
         this.state = 'returningToWork';
         this.game.physics.arcade.moveToObject(this, this.waypoints.toWork, 200);
     }

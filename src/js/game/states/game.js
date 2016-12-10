@@ -10,8 +10,17 @@ game.create = function () {
     this.map.addTilesetImage('tileset', 'tilesheet');
     this.building = this.map.createLayer('building');
 
+    this.puddles = 0;
+    this.puddleText = this.game.add.text(10, 10, '');
+    this.puddleSignal = new Phaser.Signal();
+    this.puddleSignal.add(this.updatePuddles, this);
+
     this.setUpWorkers();
 
+};
+
+game.updatePuddles = function() {
+    this.puddles += 1;
 };
 
 game.setUpWorkers = function() {
@@ -45,9 +54,11 @@ game.setUpWorkers = function() {
     jeremy = this.workers.create(656, 240, 'Jeremy', 5000);
     carla = this.workers.create(432, 240, 'Carla', 10000);
     fred = this.workers.create(656, 400, 'Fred', 8000);
-    esmerelda = this.workers.create(432, 400, 'Esmerelda', 5000);
+    esmerelda = this.workers.create(432, 400, 'Esmerelda', 3000);
     lucy = this.workers.create(656, 560, 'Lucy', 9000);
     ben = this.workers.create(432, 560, 'Ben', 11000);
+
+    this.workers.setAll('puddleSignal', this.puddleSignal, false, false, 0, true);
 
     thirdFloor.waypoints.toToilet = secondFloor;
     secondFloor.waypoints.toToilet = firstFloor;
@@ -83,6 +94,7 @@ game.setUpWorkers = function() {
 
 game.update = function () {
     this.game.physics.arcade.overlap(this.workers, this.waypoints, this.handleWayPoint, this.closeEnough, this);
+    this.puddleText.setText('Puddles: ' + this.puddles);
 };
 
 game.closeEnough = function (worker, waypoint) {

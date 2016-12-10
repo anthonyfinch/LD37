@@ -17,7 +17,7 @@ Worker = function(game, x, y, name, peeDelay) {
     var nameText = this.game.make.text(0, -25, this.name, {fontSize: '20px'});
     nameText.anchor.setTo(0.5, 0.5);
 
-    this.peeText = this.game.make.text(0, -50, this.needToPee + '%', {fontSize: '20px'});
+    this.peeText = this.game.make.text(0, -50, '', {fontSize: '20px'});
     this.peeText.anchor.setTo(0.5, 0.5);
 
     this.addChild(nameText);
@@ -32,9 +32,14 @@ Worker.prototype.update = function() {
 };
 
 Worker.prototype.updatePee = function() {
-    if (this.state == 'working')
+    if (this.state == 'working' || this.state == 'goingToBathroom')
     {
         this.needToPee += 10;
+        if (this.needToPee > 100)
+        {
+            this.puddleSignal.dispatch();
+            this.needToPee = 0;
+        }
     }
 }
 

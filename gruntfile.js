@@ -171,6 +171,11 @@ module.exports = function (grunt) {
           [ { expand: true, cwd: 'src/audio/', src: ['**'], dest: 'build/audio/' }
           ]
         }
+      , tilemaps:
+        { files:
+          [ { expand: true, cwd: 'src/tilemaps/', src: ['**'], dest: 'build/tilemaps/' }
+          ]
+        }
       , phaserArcade:
         { files:
           [ { src: ['node_modules/phaser/build/custom/phaser-arcade-physics.js'], dest: 'build/js/phaser.js' }
@@ -225,6 +230,7 @@ module.exports = function (grunt) {
     , 'stylus'
     , 'copy:images'
     , 'copy:audio'
+    , 'copy:tilemaps'
     , 'copy:phaserArcade'
     , 'connect'
     , 'open'
@@ -241,6 +247,7 @@ module.exports = function (grunt) {
     , 'uglify'
     , 'copy:images'
     , 'copy:audio'
+    , 'copy:tilemaps'
     , 'copy:phaserArcadeMin'
     , 'cacheBust'
     , 'connect'

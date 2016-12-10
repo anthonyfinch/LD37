@@ -9,7 +9,7 @@ module.exports =
   , showStats: true
   , size:
     { x: 800
-    , y: 640
+    , y: 800
     }
   , analyticsId: 'LD37'
   };

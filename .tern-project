@@ -1,0 +1,10 @@
+{
+  "libs": ["browser"],
+	"plugins" : {
+		"commonjs" : {},
+		"node" : {},
+		"requirejs" : {},
+		"node_resolve" : {},
+    "phaser": {}
+	}
+}

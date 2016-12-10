@@ -10,33 +10,41 @@ game.create = function () {
     this.map.addTilesetImage('tileset', 'tilesheet');
     this.building = this.map.createLayer('building');
 
+    this.setUpWorkers();
 
+};
+
+game.setUpWorkers = function() {
     this.workers = this.game.add.group();
     this.workers.classType = Worker;
-    this.worker1 = this.workers.create(640, 224);
-    this.worker2 = this.workers.create(640, 384);
 
     this.waypoints = this.game.add.group();
     this.waypoints.classType = Waypoint;
     this.waypoints.enableBody = true;
 
-    this.waypoint1 = this.waypoints.create(128, 224);
-    this.waypoint2 = this.waypoints.create(128, 768);
-    this.waypoint3 = this.waypoints.create(480, 768);
+    var jeremy, fred, carla, esmerelda, lucy, ben;
 
-    this.waypoint1.nextWP = this.waypoint2;
-    this.waypoint2.nextWP = this.waypoint3;
+    jeremy = this.workers.create(640, 224);
+    carla = this.workers.create(416, 224);
+    fred = this.workers.create(640, 384);
+    esmerelda = this.workers.create(416, 384);
+    lucy = this.workers.create(640, 544);
+    ben = this.workers.create(416, 544);
 
-    this.waypoint3.stopPoint = true;
+    var thirdFloor, secondFloor, firstFloor, groundFloor, toiletDoor;
 
-    this.worker1.wStartDescent = this.waypoint1;
-    this.worker2.wStartDescent = this.waypoint2;
+    thirdFloor = this.waypoints.create(128, 224);
+    groundFloor = this.waypoints.create(128, 768);
+    toiletDoor = this.waypoints.create(480, 768);
+    toiletDoor.type = 'toiletdoor';
+    toiletDoor.stopPoint = true;
 
+    thirdFloor.waypoints.toToilet = groundFloor;
+    groundFloor.waypoints.toToilet = toiletDoor;
 
-};
+    jeremy.waypoints.toToilet = thirdFloor;
+    fred.waypoints.toToilet = groundFloor;
 
-game.workerClick = function () {
-    this.worker1.goToBathroom();
 };
 
 game.update = function () {

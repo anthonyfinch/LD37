@@ -4,6 +4,7 @@ var game = {};
 
 game.create = function () {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
+    this.maxPuddles = 1;
 
     this.game.stage.backgroundColor = '#fce08c';
     this.map = this.game.add.tilemap('level');
@@ -21,6 +22,11 @@ game.create = function () {
 
 game.updatePuddles = function() {
     this.puddles += 1;
+
+    if (this.puddles > this.maxPuddles)
+    {
+        this.game.state.start('gameover');
+    }
 };
 
 game.setUpWorkers = function() {

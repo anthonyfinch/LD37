@@ -59,7 +59,7 @@ Worker.prototype.handleWaypoint = function(waypoint) {
             this.game.physics.arcade.moveToObject(this, waypoint.waypoints.toToilet, 200);
         };
     }
-    else if(this.state =='returningToWork')
+    else if(this.state == 'returningToWork')
     {
         if (waypoint == this.waypoints.toToilet)
         {
@@ -68,12 +68,15 @@ Worker.prototype.handleWaypoint = function(waypoint) {
         else if (waypoint == this.waypoints.origin)
         {
             this.state = 'working';
-            this.body.velocity = 0;
+            this.body.velocity.setTo(0, 0);
         }
         else if (waypoint.type == 'waypoint')
         {
             this.game.physics.arcade.moveToObject(this, waypoint.waypoints.toWork);
         }
+    }
+    else
+    {
     }
 };
 

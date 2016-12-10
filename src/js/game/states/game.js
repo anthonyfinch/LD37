@@ -34,7 +34,7 @@ game.setUpWorkers = function() {
 
     var thirdFloor, secondFloor, firstFloor, groundFloor, toilet;
     var jeremyOrigin, fredOrigin, carlaOrigin, esmereldaOrigin, lucyOrigin, benOrigin;
-    var q1, q2, q3, q4, q5;
+    var q1, q2, q3, q4, q5, q6;
 
     thirdFloor = this.waypoints.create(144, 240, 'waypoint');
     secondFloor = this.waypoints.create(208, 400, 'waypoint');
@@ -55,27 +55,36 @@ game.setUpWorkers = function() {
     q3 = this.waypoints.create(368, 784, 'queue');
     q4 = this.waypoints.create(336, 784, 'queue');
     q5 = this.waypoints.create(306, 784, 'queue');
+    q6 = this.waypoints.create(274, 784, 'queue');
 
     var jeremy, fred, carla, esmerelda, lucy, ben;
 
-    jeremy = this.workers.create(656, 240, 'Jeremy', 0.01);
-    carla = this.workers.create(432, 240, 'Carla', 0.05);
+    jeremy = this.workers.create(656, 240, 'Jeremy', 0.1);
+    carla = this.workers.create(432, 240, 'Carla', 0.5);
     fred = this.workers.create(656, 400, 'Fred', 0.2);
     esmerelda = this.workers.create(432, 400, 'Esmerelda', 0.9);
-    lucy = this.workers.create(656, 560, 'Lucy', 0.05);
-    ben = this.workers.create(432, 560, 'Ben', 0.01);
+    lucy = this.workers.create(656, 560, 'Lucy', 0.1);
+    ben = this.workers.create(432, 560, 'Ben', 0.2);
 
     this.workers.setAll('puddleSignal', this.puddleSignal, false, false, 0, true);
 
     thirdFloor.waypoints.toToilet = secondFloor;
     secondFloor.waypoints.toToilet = firstFloor;
     firstFloor.waypoints.toToilet = groundFloor;
-    groundFloor.waypoints.toToilet = q5;
+    groundFloor.waypoints.toToilet = q6;
+    q6.waypoints.toToilet = q5;
     q5.waypoints.toToilet = q4;
     q4.waypoints.toToilet = q3;
     q3.waypoints.toToilet = q2;
     q2.waypoints.toToilet = q1;
     q1.waypoints.toToilet = toilet;
+
+    q5.waypoints.previousSpace = q6;
+    q4.waypoints.previousSpace = q5;
+    q3.waypoints.previousSpace = q4;
+    q2.waypoints.previousSpace = q3;
+    q1.waypoints.previousSpace = q2;
+    toilet.waypoints.previousSpace = q1;
 
     secondFloor.waypoints.toWork = thirdFloor;
     firstFloor.waypoints.toWork = secondFloor;

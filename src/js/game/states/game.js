@@ -34,16 +34,25 @@ game.setUpWorkers = function() {
     var thirdFloor, secondFloor, firstFloor, groundFloor, toiletDoor;
 
     thirdFloor = this.waypoints.create(128, 224);
-    groundFloor = this.waypoints.create(128, 768);
+    secondFloor = this.waypoints.create(192, 384);
+    firstFloor = this.waypoints.create(128, 544);
+    groundFloor = this.waypoints.create(192, 768);
+
     toiletDoor = this.waypoints.create(480, 768);
     toiletDoor.type = 'toiletdoor';
     toiletDoor.stopPoint = true;
 
-    thirdFloor.waypoints.toToilet = groundFloor;
+    thirdFloor.waypoints.toToilet = secondFloor;
+    secondFloor.waypoints.toToilet = firstFloor;
+    firstFloor.waypoints.toToilet = groundFloor;
     groundFloor.waypoints.toToilet = toiletDoor;
 
     jeremy.waypoints.toToilet = thirdFloor;
-    fred.waypoints.toToilet = groundFloor;
+    carla.waypoints.toToilet = thirdFloor;
+    fred.waypoints.toToilet = secondFloor;
+    esmerelda.waypoints.toToilet = secondFloor;
+    lucy.waypoints.toToilet = firstFloor;
+    ben.waypoints.toToilet = firstFloor;
 
 };
 

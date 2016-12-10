@@ -26,28 +26,28 @@ game.setUpWorkers = function() {
     var thirdFloor, secondFloor, firstFloor, groundFloor, toilet;
     var jeremyOrigin, fredOrigin, carlaOrigin, esmereldaOrigin, lucyOrigin, benOrigin;
 
-    thirdFloor = this.waypoints.create(128, 224, 'waypoint');
-    secondFloor = this.waypoints.create(192, 384, 'waypoint');
-    firstFloor = this.waypoints.create(128, 544, 'waypoint');
-    groundFloor = this.waypoints.create(192, 768, 'waypoint');
+    thirdFloor = this.waypoints.create(144, 240, 'waypoint');
+    secondFloor = this.waypoints.create(208, 400, 'waypoint');
+    firstFloor = this.waypoints.create(144, 560, 'waypoint');
+    groundFloor = this.waypoints.create(208, 784, 'waypoint');
 
-    jeremyOrigin = this.waypoints.create(640, 224, 'workplace');
-    carlaOrigin = this.waypoints.create(416, 224, 'workplace');
-    fredOrigin = this.waypoints.create(640, 384, 'workplace');
-    esmereldaOrigin = this.waypoints.create(416, 384, 'workplace');
-    lucyOrigin = this.waypoints.create(640, 544, 'workplace');
-    benOrigin = this.waypoints.create(416, 544, 'workplace');
+    jeremyOrigin = this.waypoints.create(656, 240, 'workplace');
+    carlaOrigin = this.waypoints.create(432, 240, 'workplace');
+    fredOrigin = this.waypoints.create(656, 400, 'workplace');
+    esmereldaOrigin = this.waypoints.create(432, 400, 'workplace');
+    lucyOrigin = this.waypoints.create(656, 560, 'workplace');
+    benOrigin = this.waypoints.create(432, 560, 'workplace');
 
-    toilet = this.waypoints.create(480, 768, 'toilet');
+    toilet = this.waypoints.create(496, 784, 'toilet');
 
     var jeremy, fred, carla, esmerelda, lucy, ben;
 
-    jeremy = this.workers.create(640, 224);
-    carla = this.workers.create(416, 224);
-    fred = this.workers.create(640, 384);
-    esmerelda = this.workers.create(416, 384);
-    lucy = this.workers.create(640, 544);
-    ben = this.workers.create(416, 544);
+    jeremy = this.workers.create(656, 240, 'Jeremy', 5000);
+    carla = this.workers.create(432, 240, 'Carla', 10000);
+    fred = this.workers.create(656, 400, 'Fred', 8000);
+    esmerelda = this.workers.create(432, 400, 'Esmerelda', 5000);
+    lucy = this.workers.create(656, 560, 'Lucy', 9000);
+    ben = this.workers.create(432, 560, 'Ben', 11000);
 
     thirdFloor.waypoints.toToilet = secondFloor;
     secondFloor.waypoints.toToilet = firstFloor;

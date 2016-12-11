@@ -265,9 +265,6 @@ module.exports = function (grunt) {
     , 'copy:fonts'
     , 'copy:phaserArcadeMin'
     , 'cacheBust'
-    , 'connect'
-    , 'open'
-    , 'watch'
     ]
   );
 

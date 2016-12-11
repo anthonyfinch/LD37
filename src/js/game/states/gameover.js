@@ -14,6 +14,6 @@ gameover.create = function() {
 
 gameover.restartGame = function() {
     this.game.state.start('game');
-}
+};
 
 module.exports = gameover;

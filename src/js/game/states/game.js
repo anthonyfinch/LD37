@@ -4,7 +4,7 @@ var game = {};
 
 game.create = function () {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.maxPuddles = 2;
+    this.maxPuddles = 3;
 
     this.game.stage.backgroundColor = '#fce08c';
     this.bg = this.game.add.image(0, 0, 'background');
@@ -14,6 +14,8 @@ game.create = function () {
 
     this.puddles = 0;
     this.puddleText = this.game.add.bitmapText(10, 10, 'carrier_command', '', 20);
+
+
     this.puddleSignal = new Phaser.Signal();
     this.puddleSignal.add(this.updatePuddles, this);
 
@@ -21,6 +23,7 @@ game.create = function () {
 
     this.puddleText.setText('Puddles: ' + this.puddles + '/' + this.maxPuddles);
     this.walkables = this.map.createLayer('walkables');
+    this.wcText = this.game.add.bitmapText(505, 695, 'carrier_command', 'WC', 25);
 };
 
 game.updatePuddles = function() {
@@ -44,7 +47,7 @@ game.setUpWorkers = function() {
 
     var thirdFloor, secondFloor, firstFloor, groundFloor, toilet;
     var jeremyOrigin, fredOrigin, carlaOrigin, esmereldaOrigin, lucyOrigin, benOrigin;
-    var q1, q2, q3, q4;
+    var q1, q2, q3;
 
     thirdFloor = this.waypoints.create(86, 320, 'waypoint');
     secondFloor = this.waypoints.create(215, 464, 'waypoint');
@@ -69,12 +72,12 @@ game.setUpWorkers = function() {
 
     var jeremy, fred, carla, esmerelda, lucy, ben;
 
-    jeremy = this.workers.create(700, 302, 'Jeremy', 0.5);
+    jeremy = this.workers.create(700, 302, 'Jeremy', 1.5);
     carla = this.workers.create(320, 302, 'Carla', 1);
-    fred = this.workers.create(656, 478, 'Fred', 1);
-    esmerelda = this.workers.create(432, 478, 'Esmerelda', 3);
-    lucy = this.workers.create(549, 655, 'Lucy', 2);
-    ben = this.workers.create(380, 655, 'Ben', 1);
+    fred = this.workers.create(656, 478, 'Fred', 1.1);
+    esmerelda = this.workers.create(432, 478, 'Esmerelda', 2);
+    lucy = this.workers.create(549, 655, 'Lucy', 1.4);
+    ben = this.workers.create(380, 655, 'Ben', 0.9);
 
     this.workers.setAll('puddleSignal', this.puddleSignal, false, false, 0, true);
 

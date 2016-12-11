@@ -8,11 +8,12 @@ game.create = function () {
 
     this.game.stage.backgroundColor = '#fce08c';
     this.map = this.game.add.tilemap('level');
-    this.map.addTilesetImage('tileset', 'tilesheet');
+    this.map.addTilesetImage('building', 'tilesheet');
     this.building = this.map.createLayer('building');
+    this.walkables = this.map.createLayer('walkables');
 
     this.puddles = 0;
-    this.puddleText = this.game.add.text(10, 10, '');
+    this.puddleText = this.game.add.bitmapText(10, 10, 'carrier_command', '', 20);
     this.puddleSignal = new Phaser.Signal();
     this.puddleSignal.add(this.updatePuddles, this);
 
@@ -40,54 +41,48 @@ game.setUpWorkers = function() {
 
     var thirdFloor, secondFloor, firstFloor, groundFloor, toilet;
     var jeremyOrigin, fredOrigin, carlaOrigin, esmereldaOrigin, lucyOrigin, benOrigin;
-    var q1, q2, q3, q4, q5, q6;
+    var q1, q2, q3, q4;
 
-    thirdFloor = this.waypoints.create(144, 240, 'waypoint');
-    secondFloor = this.waypoints.create(208, 400, 'waypoint');
-    firstFloor = this.waypoints.create(144, 560, 'waypoint');
-    groundFloor = this.waypoints.create(208, 784, 'waypoint');
+    thirdFloor = this.waypoints.create(86, 320, 'waypoint');
+    secondFloor = this.waypoints.create(215, 464, 'waypoint');
+    firstFloor = this.waypoints.create(85, 659, 'waypoint');
+    groundFloor = this.waypoints.create(181, 767, 'waypoint');
 
-    jeremyOrigin = this.waypoints.create(656, 240, 'workplace');
-    carlaOrigin = this.waypoints.create(432, 240, 'workplace');
-    fredOrigin = this.waypoints.create(656, 400, 'workplace');
-    esmereldaOrigin = this.waypoints.create(432, 400, 'workplace');
-    lucyOrigin = this.waypoints.create(656, 560, 'workplace');
-    benOrigin = this.waypoints.create(432, 560, 'workplace');
+    jeremyOrigin = this.waypoints.create(700, 302, 'workplace');
+    carlaOrigin = this.waypoints.create(320, 302, 'workplace');
+    fredOrigin = this.waypoints.create(656, 478, 'workplace');
+    esmereldaOrigin = this.waypoints.create(432, 478, 'workplace');
+    lucyOrigin = this.waypoints.create(549, 655, 'workplace');
+    benOrigin = this.waypoints.create(380, 655, 'workplace');
 
-    toilet = this.waypoints.create(496, 784, 'toilet');
+    toilet = this.waypoints.create(505, 767, 'toilet');
 
-    q1 = this.waypoints.create(432, 784, 'queue');
-    q2 = this.waypoints.create(400, 784, 'queue');
-    q3 = this.waypoints.create(368, 784, 'queue');
-    q4 = this.waypoints.create(336, 784, 'queue');
-    q5 = this.waypoints.create(306, 784, 'queue');
-    q6 = this.waypoints.create(274, 784, 'queue');
+    q1 = this.waypoints.create(457, 767, 'queue');
+    q2 = this.waypoints.create(409, 767, 'queue');
+    q3 = this.waypoints.create(361, 767, 'queue');
+    // q4 = this.waypoints.create(313, 767, 'queue');
 
     var jeremy, fred, carla, esmerelda, lucy, ben;
 
-    jeremy = this.workers.create(656, 240, 'Jeremy', 0.1);
-    carla = this.workers.create(432, 240, 'Carla', 0.5);
-    fred = this.workers.create(656, 400, 'Fred', 0.2);
-    esmerelda = this.workers.create(432, 400, 'Esmerelda', 0.9);
-    lucy = this.workers.create(656, 560, 'Lucy', 0.1);
-    ben = this.workers.create(432, 560, 'Ben', 0.2);
+    jeremy = this.workers.create(700, 302, 'Jeremy', 0.5);
+    carla = this.workers.create(320, 302, 'Carla', 1);
+    fred = this.workers.create(656, 478, 'Fred', 1);
+    esmerelda = this.workers.create(432, 478, 'Esmerelda', 3);
+    lucy = this.workers.create(549, 655, 'Lucy', 2);
+    ben = this.workers.create(380, 655, 'Ben', 1);
 
     this.workers.setAll('puddleSignal', this.puddleSignal, false, false, 0, true);
 
     thirdFloor.waypoints.toToilet = secondFloor;
     secondFloor.waypoints.toToilet = firstFloor;
     firstFloor.waypoints.toToilet = groundFloor;
-    groundFloor.waypoints.toToilet = q6;
-    q6.waypoints.toToilet = q5;
-    q5.waypoints.toToilet = q4;
-    q4.waypoints.toToilet = q3;
+    groundFloor.waypoints.toToilet = q3;
+    // q4.waypoints.toToilet = q3;
     q3.waypoints.toToilet = q2;
     q2.waypoints.toToilet = q1;
     q1.waypoints.toToilet = toilet;
 
-    q5.waypoints.previousSpace = q6;
-    q4.waypoints.previousSpace = q5;
-    q3.waypoints.previousSpace = q4;
+    // q3.waypoints.previousSpace = q4;
     q2.waypoints.previousSpace = q3;
     q1.waypoints.previousSpace = q2;
     toilet.waypoints.previousSpace = q1;

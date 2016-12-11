@@ -82,6 +82,10 @@ module.exports = function (grunt) {
         { files: 'src/images/**/*'
         , tasks: ['copy:images']
         }
+      , fonts:
+        { files: 'src/fonts/**/*'
+          , tasks: ['copy:fonts']
+        }
       , tilemaps:
         { files: 'src/tilemaps/**/*'
           , tasks: ['copy:tilemaps']
@@ -180,6 +184,11 @@ module.exports = function (grunt) {
           [ { expand: true, cwd: 'src/tilemaps/', src: ['**'], dest: 'build/tilemaps/' }
           ]
         }
+      , fonts:
+        { files:
+          [ { expand: true, cwd: 'src/fonts/', src: ['**'], dest: 'build/fonts/' }
+          ]
+        }
       , phaserArcade:
         { files:
           [ { src: ['node_modules/phaser/build/custom/phaser-arcade-physics.js'], dest: 'build/js/phaser.js' }
@@ -235,6 +244,7 @@ module.exports = function (grunt) {
     , 'copy:images'
     , 'copy:audio'
     , 'copy:tilemaps'
+    , 'copy:fonts'
     , 'copy:phaserArcade'
     , 'connect'
     , 'open'
@@ -252,6 +262,7 @@ module.exports = function (grunt) {
     , 'copy:images'
     , 'copy:audio'
     , 'copy:tilemaps'
+    , 'copy:fonts'
     , 'copy:phaserArcadeMin'
     , 'cacheBust'
     , 'connect'

@@ -11,7 +11,7 @@ preloader.preload = function () {
 };
 
 preloader.create = function () {
-  this.game.state.start('game');
+  this.game.state.start('loading');
 };
 
 module.exports = preloader;

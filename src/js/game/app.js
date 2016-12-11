@@ -3,6 +3,7 @@ var _ = require('lodash')
   , states =
     { boot: require('./states/boot.js')
     , preloader: require('./states/preloader.js')
+    , loading: require('./states/loading.js')
     , game: require('./states/game.js')
     , gameover: require('./states/gameover.js')
     }

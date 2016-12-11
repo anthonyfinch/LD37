@@ -19,7 +19,7 @@ var Worker = function(game, x, y, name, peeInc) {
     this.peeText = this.game.make.text(0, -50, '', {fontSize: '20px'});
     this.peeText.anchor.setTo(0.5, 0.5);
 
-    this.addChild(nameText);
+    // this.addChild(nameText);
     this.addChild(this.peeText);
 
     this.setPee(0);
@@ -55,7 +55,7 @@ Worker.prototype.updatePee = function() {
 
 Worker.prototype.lockOn = function(wp)
 {
-    this.body.position.setTo(wp.body.position.x, wp.body.position.y);
+    // this.body.position.setTo(wp.body.position.x, wp.body.position.y);
     this.body.velocity.setTo(0, 0);
 };
 

@@ -4,13 +4,12 @@ var game = {};
 
 game.create = function () {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.maxPuddles = 1;
+    this.maxPuddles = 2;
 
     this.game.stage.backgroundColor = '#fce08c';
     this.map = this.game.add.tilemap('level');
     this.map.addTilesetImage('building', 'tilesheet');
     this.building = this.map.createLayer('building');
-    this.walkables = this.map.createLayer('walkables');
 
     this.puddles = 0;
     this.puddleText = this.game.add.bitmapText(10, 10, 'carrier_command', '', 20);
@@ -19,12 +18,15 @@ game.create = function () {
 
     this.setUpWorkers();
 
+    this.puddleText.setText('Puddles: ' + this.puddles + '/' + this.maxPuddles);
+    this.walkables = this.map.createLayer('walkables');
 };
 
 game.updatePuddles = function() {
     this.puddles += 1;
+    this.puddleText.setText('Puddles: ' + this.puddles + '/' + this.maxPuddles);
 
-    if (this.puddles > this.maxPuddles)
+    if (this.puddles >= this.maxPuddles)
     {
         this.game.state.start('gameover');
     }
@@ -61,6 +63,8 @@ game.setUpWorkers = function() {
     q2 = this.waypoints.create(409, 767, 'queue');
     q3 = this.waypoints.create(361, 767, 'queue');
     // q4 = this.waypoints.create(313, 767, 'queue');
+
+    this.waypoints.setAll('visible', false);
 
     var jeremy, fred, carla, esmerelda, lucy, ben;
 
@@ -116,7 +120,6 @@ game.setUpWorkers = function() {
 
 game.update = function () {
     this.game.physics.arcade.overlap(this.workers, this.waypoints, this.handleWaypoint, this.closeEnough, this);
-    this.puddleText.setText('Puddles: ' + this.puddles);
 };
 
 game.closeEnough = function (worker, waypoint) {

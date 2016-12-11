@@ -7,6 +7,7 @@ game.create = function () {
     this.maxPuddles = 2;
 
     this.game.stage.backgroundColor = '#fce08c';
+    this.bg = this.game.add.image(0, 0, 'background');
     this.map = this.game.add.tilemap('level');
     this.map.addTilesetImage('building', 'tilesheet');
     this.building = this.map.createLayer('building');

@@ -1,5 +1,5 @@
-var Worker = function(game, x, y, name, peeInc) {
-    Phaser.Sprite.call(this, game, x, y, 'person');
+var Worker = function(game, x, y, spriteName, peeInc) {
+    Phaser.Sprite.call(this, game, x, y, spriteName);
     this.name = name;
     this.game.physics.arcade.enable(this);
     this.inputEnabled = true;
@@ -104,7 +104,6 @@ Worker.prototype.updatePee = function() {
 
 Worker.prototype.setPeeRate = function() {
     this.peeRate = Math.floor(Math.random() * 3) + 3;
-    console.log(this.peeRate);
 };
 
 Worker.prototype.lockOn = function(wp)
@@ -114,7 +113,6 @@ Worker.prototype.lockOn = function(wp)
 };
 
 Worker.prototype.goToBathroom = function() {
-    console.log(this);
     if (this.state !== 'returningToWork') {
         this.game.physics.arcade.moveToObject(this, this.waypoints.toToilet, 200);
         this.state = 'goingToBathroom';
@@ -186,11 +184,9 @@ Worker.prototype.handleToilet = function(waypoint) {
         if (waypoint.occupied && waypoint.occupant !== this)
         {
             this.game.physics.arcade.moveToObject(this, waypoint.waypoints.previousSpace, 200);
-            console.log('queuing');
         }
         else if (!waypoint.occupied)
         {
-            console.log('starting to pee');
             waypoint.occupied = true;
             waypoint.occupant = this;
             this.setPeeRate();
@@ -199,7 +195,6 @@ Worker.prototype.handleToilet = function(waypoint) {
         }
         else if (this.needToPee <= 0)
         {
-            console.log('finished');
             waypoint.occupied = false;
             this.state = 'returningToWork';
             this.justPeed = true;

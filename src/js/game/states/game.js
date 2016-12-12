@@ -23,6 +23,11 @@ game.create = function () {
     this.puddleSignal = new Phaser.Signal();
     this.puddleSignal.add(this.updatePuddles, this);
 
+    this.toiletSignal = new Phaser.Signal();
+    this.toiletSignal.add(this.toiletSounds, this);
+
+    this.flush = this.game.add.audio('flush');
+    this.pee = this.game.add.audio('pee');
     this.setUpWorkers();
 
     this.puddleText.setText('Puddles: ' + this.puddles + '/' + this.maxPuddles);
@@ -33,6 +38,16 @@ game.create = function () {
 game.updateTime = function() {
     this.timeWorked += 1;
     this.timeText.setText('Time Worked: ' + this.timeWorked + ' mins');
+};
+
+game.toiletSounds = function(activity) {
+    if (activity === 'peeing') {
+        // this.pee.play();
+    }
+    if (activity === 'flushing') {
+        this.pee.stop();
+        this.flush.play();
+    }
 };
 
 game.updatePuddles = function() {
@@ -89,6 +104,7 @@ game.setUpWorkers = function() {
     ben = this.workers.create(380, 655, 'person6', 0.9, 'person6');
 
     this.workers.setAll('puddleSignal', this.puddleSignal, false, false, 0, true);
+    this.workers.setAll('toiletSignal', this.toiletSignal, false, false, 0, true);
 
     thirdFloor.waypoints.toToilet = secondFloor;
     secondFloor.waypoints.toToilet = firstFloor;

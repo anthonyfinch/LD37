@@ -189,6 +189,7 @@ Worker.prototype.handleToilet = function(waypoint) {
         {
             waypoint.occupied = true;
             waypoint.occupant = this;
+            this.toiletSignal.dispatch('peeing');
             this.setPeeRate();
             this.state = 'peeing';
             this.lockOn(waypoint);
@@ -196,6 +197,7 @@ Worker.prototype.handleToilet = function(waypoint) {
         else if (this.needToPee <= 0)
         {
             waypoint.occupied = false;
+            this.toiletSignal.dispatch('flushing');
             this.state = 'returningToWork';
             this.justPeed = true;
             this.game.physics.arcade.moveToObject(this, this.waypoints.toWork, 200);

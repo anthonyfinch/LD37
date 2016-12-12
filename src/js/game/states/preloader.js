@@ -4,6 +4,8 @@ preloader.preload = function () {
     this.game.load.image('logo', 'images/wiz-face.png');
     this.game.load.image('tilesheet', 'images/tileset2.png');
     this.game.load.image('background', 'images/background.png');
+    this.game.load.audio('flush', 'audio/flush.ogg');
+    this.game.load.audio('pee', 'audio/pee.ogg');
     this.game.load.spritesheet('person1', 'images/person2.png', 48, 72);
     this.game.load.spritesheet('person2', 'images/person3.png', 48, 72);
     this.game.load.spritesheet('person3', 'images/person4.png', 48, 72);

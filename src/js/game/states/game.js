@@ -41,9 +41,9 @@ game.updateTime = function() {
 };
 
 game.toiletSounds = function(activity) {
-    if (activity === 'peeing') {
-        // this.pee.play();
-    }
+    // if (activity === 'peeing') {
+    //     // this.pee.play();
+    // }
     if (activity === 'flushing') {
         this.pee.stop();
         this.flush.play();

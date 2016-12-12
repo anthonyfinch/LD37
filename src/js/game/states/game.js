@@ -14,7 +14,11 @@ game.create = function () {
 
     this.puddles = 0;
     this.puddleText = this.game.add.bitmapText(10, 10, 'carrier_command', '', 20);
+    this.timeWorked = 0;
+    this.timeText = this.game.add.bitmapText(10, 40, 'carrier_command', '', 20);
 
+
+    this.game.time.events.loop(1000, this.updateTime, this);
 
     this.puddleSignal = new Phaser.Signal();
     this.puddleSignal.add(this.updatePuddles, this);
@@ -26,13 +30,18 @@ game.create = function () {
     this.wcText = this.game.add.bitmapText(505, 695, 'carrier_command', 'WC', 25);
 };
 
+game.updateTime = function() {
+    this.timeWorked += 1;
+    this.timeText.setText('Time Worked: ' + this.timeWorked + ' mins');
+};
+
 game.updatePuddles = function() {
     this.puddles += 1;
     this.puddleText.setText('Puddles: ' + this.puddles + '/' + this.maxPuddles);
 
     if (this.puddles >= this.maxPuddles)
     {
-        this.game.state.start('gameover');
+        this.game.state.start('gameover', true, false, this.timeWorked);
     }
 };
 
